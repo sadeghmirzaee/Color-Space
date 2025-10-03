@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Color Space</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div id="info">
+            A visual representation of the colorspace
+        </div>
+        <div id="title">
+            Color Space
+        </div>
+        <div id="rightButtons" class="headerButtons">
+            <button id="aboutButton">About</button>
+        </div>
+    </header>
+
+    <!-- About Dialog -->
+    <div id="aboutDialog" class="dialog">
+        <div class="dialog-content">
+            <span class="close-button">&times;</span>
+            <h2>About Color Space</h2>
+            <div class="dialog-text">
+                <p>Color Space shows HSV using a polar coordinate view:</p>
+                <ul>
+                    <li><strong>Hue</strong>: the angle around the base disk (0–360°)</li>
+                    <li><strong>Saturation</strong>: the distance from the center (radius 0–1)</li>
+                    <li><strong>Brightness</strong>: the height up the vertical axis (0–1)</li>
+                </ul>
+                <p>In simple terms: pick a direction for Hue, move outwards by Saturation, then go up by Brightness.</p>
+                <p>Under the hood this maps to the scene like so (from the code):</p>
+                <ul>
+                    <li>x = cos(Hue) × Saturation × radius</li>
+                    <li>z = sin(Hue) × Saturation × radius</li>
+                    <li>y = Brightness × height</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="visualization-container">
+        <canvas id="visualization-canvas"></canvas>
+    </div>
+
+    <!-- Minimal dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Application script -->
+    <script src="main.js"></script>
+
+    
+</body>
+
+</html>
