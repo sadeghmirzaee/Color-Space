@@ -29,8 +29,8 @@ function createTextSprite(text, color) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#000000';
-    ctx.globalAlpha = 0.35;
-    ctx.fillRect(0, 0, w, h);
+    // ctx.globalAlpha = 0.35;
+    // ctx.fillRect(0, 0, w, h);
     ctx.globalAlpha = 1.0;
     ctx.fillStyle = `#${new THREE.Color(color).getHexString()}`;
     ctx.fillText(text, w / 2, h / 2);
@@ -173,7 +173,7 @@ function createAxesHSBPolar(radius, height) {
     group.add(createPolarGridHSPlane(radius, 6, 12, yMid));
 
     // Vertical Brightness axis (Z)
-    const bAxis = createAxis(height, 0x5599ff, 'Brighness', 10);
+    const bAxis = createAxis(height, 0xffffff, 'Brighness', 10);
     bAxis.rotation.z = Math.PI / 2; // align +X to +Y
     group.add(bAxis);
 
@@ -185,12 +185,12 @@ function createAxesHSBPolar(radius, height) {
     group.add(origin);
 
     // Saturation guide (radial arrow from origin)
-    const satGuide = createAxis(radius, 0x55ff55, 'Saturation', 15);
+    const satGuide = createAxis(radius, 0x222222, 'Saturation', 15);
     satGuide.position.y = yMid + 0.02;
     group.add(satGuide);
 
     // Hue guide (curved around rim with tangent arrow)
-    const hueColor = 0xff888;
+    const hueColor = 0x555555;
     const arcGeom = new THREE.TorusGeometry(radius, 0.3, 8, 128);
     const arcMat = new THREE.MeshPhongMaterial({ color: hueColor });
     const hueRing = new THREE.Mesh(arcGeom, arcMat);
@@ -236,7 +236,7 @@ function main() {
     renderer.setPixelRatio(window.devicePixelRatio);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x199999);
+    scene.background = new THREE.Color(0x999999);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
     camera.position.set(200, 140, 180);
@@ -283,17 +283,6 @@ function main() {
     }
     samples.forEach(p => addSamplePolar(p.h, p.s, p.v));
 
-    // also sprinkle a small lattice of points to hint space
-    const stepH = 60; // 6 hues
-    const stepS = 0.5; // 0, .5, 1
-    const stepV = 0.5; // 0, .5, 1
-    for (let h = 0; h <= 360; h += stepH) {
-        for (let s = 0; s <= 1.0001; s += stepS) {
-            for (let v = 0; v <= 1.0001; v += stepV) {
-                addSamplePolar(h, Math.min(s,1), Math.min(v,1));
-            }
-        }
-    }
 
     function onResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
